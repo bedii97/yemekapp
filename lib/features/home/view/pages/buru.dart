@@ -1,0 +1,3 @@
+class Buru {
+  void main() {}
+}
