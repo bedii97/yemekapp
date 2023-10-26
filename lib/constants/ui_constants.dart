@@ -120,7 +120,7 @@ class UiConstants {
     return const Text(
       "YemekApp",
       style: TextStyle(
-        color: Palette.whiteColor,
+        color: Palette.greenColor,
         fontWeight: FontWeight.w600,
         fontSize: 36.0,
       ),

@@ -95,6 +95,7 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
                                 username: usernamecontroller.text,
                                 password: passwordcontroller.text,
                                 context: context);
+                            FocusScope.of(context).unfocus();
                           }
                         }),
                 const SizedBox(height: 16.0),

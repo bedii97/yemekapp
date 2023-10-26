@@ -25,24 +25,10 @@ class AuthProvider extends StateNotifier<bool> with TokenManager {
       await _authService
           .login(username: username, password: password)
           .then((loginResponse) async {
-        print('object1');
-        print('object2');
-        print('object3');
-        print('object4');
-        print('object5');
-        print('object6');
         print(loginResponse!.token);
         print(loginResponse.code);
         print(loginResponse.message);
-        print('object7');
-        print('object8');
-        print('object9');
-        print('object10');
-        print('object11');
         if (loginResponse.code == 200) {
-          // final tokenManager = TokenManager.prefInstance;
-          // tokenManager.saveToken((loginResponse.token) as String);
-          // print("Token Saved: ${loginResponse.token}");
           saveToken((loginResponse.token) as String);
           print('Token Saved: ${loginResponse.token}');
           Navigator.pushNamed(context, AppRoutes.homeScreen);
