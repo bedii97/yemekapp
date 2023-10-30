@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:yemek_app/constants/ui_constants.dart';
 import 'package:yemek_app/core/utils/validations.dart';
+import 'package:yemek_app/features/auth/widgets/auth_field.dart';
 import 'package:yemek_app/theme/custom_text_style.dart';
 import 'package:yemek_app/core/utils/size_utils.dart';
 import 'package:yemek_app/widgets/big_title_text.dart';
@@ -63,12 +64,18 @@ class ForgotPasswordScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 19.v),
-                CustomTextFormField(
-                  validator: Validations.emailValidation,
+                // CustomTextFormField(
+                //   validator: Validations.emailValidation,
+                //   controller: emailController,
+                //   hintText: "lbl_email".tr(),
+                //   textInputAction: TextInputAction.done,
+                //   textInputType: TextInputType.emailAddress,
+                // ),
+                AuthField(
                   controller: emailController,
-                  hintText: "lbl_email".tr(),
-                  textInputAction: TextInputAction.done,
-                  textInputType: TextInputType.emailAddress,
+                  hintText: 'lbl_email'.tr(),
+                  isPassword: true,
+                  validation: Validations.emailValidation,
                 ),
                 SizedBox(height: 21.v),
                 // CustomElevatedButton(

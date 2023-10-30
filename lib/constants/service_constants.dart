@@ -5,6 +5,6 @@ class ServiceConstants {
   static const login = '$_api/login';
   static const posts = '$_api/posts';
   static const users = '$_api/users';
-  static const connectTimeout = Duration(seconds: 40);
+  static const connectTimeout = Duration(seconds: 3);
   static const receiveTimeout = Duration(seconds: 3);
 }

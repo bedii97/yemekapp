@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_navigation_bar/responsive_navigation_bar.dart';
 import 'package:yemek_app/constants/ui_constants.dart';
-import 'package:yemek_app/features/home/view/pages/discovery_page.dart';
-import 'package:yemek_app/features/home/view/pages/home_page.dart';
-import 'package:yemek_app/features/home/view/pages/notification_page.dart';
-import 'package:yemek_app/features/home/view/pages/profile_page.dart';
+import 'package:yemek_app/features/home/pages/discovery_page.dart';
+import 'package:yemek_app/features/home/pages/home_page.dart';
+import 'package:yemek_app/features/home/pages/notification_page.dart';
+import 'package:yemek_app/features/home/pages/profile_page.dart';
 import 'package:yemek_app/theme/palette.dart';
 
 final bottomNavigationBarProvider = StateProvider<int>((ref) {

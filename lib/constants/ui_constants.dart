@@ -26,6 +26,22 @@ class UiConstants {
     );
   }
 
+  static AppBar appBarWithSearch() {
+    return AppBar(
+      title: const Text('Uygulama Başlığı'),
+      backgroundColor: Colors.blue, // AppBar rengi
+      centerTitle: true,
+      actions: <Widget>[
+        IconButton(
+          icon: const Icon(Icons.search),
+          onPressed: () {
+            // Burada arama işlemi başlatılabilir veya bir arama sayfasına geçiş yapılabilir.
+          },
+        ),
+      ],
+    );
+  }
+
   static AppBar appBarTransparent() {
     return AppBar(
       title: UiConstants.logo(),
@@ -120,7 +136,7 @@ class UiConstants {
     return const Text(
       "YemekApp",
       style: TextStyle(
-        color: Palette.greenColor,
+        color: Palette.whiteColor,
         fontWeight: FontWeight.w600,
         fontSize: 36.0,
       ),

@@ -3,7 +3,7 @@ import 'package:yemek_app/features/auth/view/signin_screen.dart';
 import 'package:yemek_app/features/auth/view/signup_screen.dart';
 import 'package:yemek_app/features/forgot_password/forgot_password_screen.dart';
 import 'package:yemek_app/features/home/view/home_screen.dart';
-import 'package:yemek_app/features/splash/splash_screen.dart';
+import 'package:yemek_app/features/splash/view/splash_screen.dart';
 
 class AppRoutes {
   static const String signInScreen = '/signin_screen';

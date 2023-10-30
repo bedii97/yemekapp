@@ -1,6 +1,9 @@
+import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yemek_app/constants/server_errors.dart';
+import 'package:yemek_app/constants/service_constants.dart';
 import 'package:yemek_app/core/utils/token_manager.dart';
 import 'package:yemek_app/core/utils/utils.dart';
 import 'package:yemek_app/features/auth/service/auth_service.dart';
@@ -20,29 +23,48 @@ class AuthProvider extends StateNotifier<bool> with TokenManager {
       {required String username,
       required String password,
       required BuildContext context}) async {
+    print('PROVIDER LOGIN IÇINDE');
     try {
+      print('PROVIDER TRY IÇINDE');
       state = true;
       await _authService
           .login(username: username, password: password)
           .then((loginResponse) async {
-        print(loginResponse!.token);
-        print(loginResponse.code);
-        print(loginResponse.message);
-        if (loginResponse.code == 200) {
-          saveToken((loginResponse.token) as String);
-          print('Token Saved: ${loginResponse.token}');
+        print(loginResponse?.code);
+        if ((loginResponse?.code) is int && loginResponse?.code == 200) {
+          print('PROVIDER IF IÇINDE');
+          state = false;
+          saveToken((loginResponse?.token) as String);
+          print('Token Saved: ${loginResponse?.token}');
           Navigator.pushNamed(context, AppRoutes.homeScreen);
           //pushReplacementNamed
         } else {
+          print('PROVIDER ELSE IÇINDE');
+          state = false;
           showSnackBar(
             context,
-            ((loginResponse.message ?? 'undefined_error')).tr(),
+            (ServerErrors.errors.containsValue(loginResponse?.message)
+                    ? loginResponse?.message
+                    : 'undefined_error')!
+                .tr(),
           );
         }
-      });
+      }).onError(
+        (error, stackTrace) {
+          print('PROVIDER ONERROR IÇINDE');
+          state = false;
+          print(error);
+          print(stackTrace);
+        },
+      );
       state = false;
+    } on DioException catch (e) {
+      print('PROVIDER DIOERROR IÇINDE');
+      state = false;
+      print(e);
     } catch (e) {
-      state = false;
+      print('PROVIDER CATCH IÇINDE');
+      print(e);
     }
   }
 
@@ -55,10 +77,17 @@ class AuthProvider extends StateNotifier<bool> with TokenManager {
       state = true;
       await _authService
           .register(username: username, email: email, password: password)
-          .then((value) {
-        if (value) {
+          .then((baseResponse) {
+        if (baseResponse?.code == 200) {
           Navigator.pushNamed(context, AppRoutes.homeScreen);
-        } else {}
+        } else {
+          showSnackBar(
+              context,
+              (ServerErrors.errors.containsValue(baseResponse?.message)
+                      ? baseResponse?.message
+                      : 'undefined_error')!
+                  .tr());
+        }
         //pushReplacementNamed
       });
       state = false;
