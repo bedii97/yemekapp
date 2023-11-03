@@ -3,7 +3,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yemek_app/constants/server_errors.dart';
-import 'package:yemek_app/constants/service_constants.dart';
 import 'package:yemek_app/core/utils/token_manager.dart';
 import 'package:yemek_app/core/utils/utils.dart';
 import 'package:yemek_app/features/auth/service/auth_service.dart';
@@ -36,7 +35,11 @@ class AuthProvider extends StateNotifier<bool> with TokenManager {
           state = false;
           saveToken((loginResponse?.token) as String);
           print('Token Saved: ${loginResponse?.token}');
-          Navigator.pushNamed(context, AppRoutes.homeScreen);
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            AppRoutes.homeScreen,
+            (route) => false,
+          );
           //pushReplacementNamed
         } else {
           print('PROVIDER ELSE IÇINDE');
@@ -79,7 +82,13 @@ class AuthProvider extends StateNotifier<bool> with TokenManager {
           .register(username: username, email: email, password: password)
           .then((baseResponse) {
         if (baseResponse?.code == 200) {
-          Navigator.pushNamed(context, AppRoutes.homeScreen);
+          // Navigator.pushNamed(context, AppRoutes.homeScreen);
+          showSnackBar(context, 'registration_check_email'.tr());
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            AppRoutes.signInScreen,
+            (route) => false,
+          );
         } else {
           showSnackBar(
               context,
@@ -98,6 +107,11 @@ class AuthProvider extends StateNotifier<bool> with TokenManager {
 
   void logout(BuildContext context) {
     deleteToken();
-    Navigator.pushReplacementNamed(context, AppRoutes.signInScreen);
+    // Navigator.pushReplacementNamed(context, AppRoutes.signInScreen);
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      AppRoutes.signInScreen,
+      (route) => false,
+    );
   }
 }

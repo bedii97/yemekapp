@@ -9,7 +9,6 @@ import 'package:yemek_app/theme/custom_text_style.dart';
 import 'package:yemek_app/core/utils/size_utils.dart';
 import 'package:yemek_app/widgets/big_title_text.dart';
 import 'package:yemek_app/widgets/common_button.dart';
-import 'package:yemek_app/widgets/custom_text_form_field.dart';
 
 // ignore: must_be_immutable
 class SignupScreen extends ConsumerWidget {

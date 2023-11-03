@@ -1,9 +1,7 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:yemek_app/core/utils/connection_checker.dart';
-import 'package:yemek_app/core/utils/utils.dart';
 import 'package:yemek_app/routes/app_routes.dart';
 import 'package:yemek_app/routes/route_manager.dart';
 

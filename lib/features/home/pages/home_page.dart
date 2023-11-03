@@ -13,9 +13,8 @@ Tencereyi ocağa alıp kısık ateşte 20-25 dakika pişirelim.
 Sonrasında tavukları ayırıp blenderla iyice ezelim.
 Tavukları didip tekrar çorbanın içerisine ilave edelim.
 Tuzunu ve baharatını da ilave edip karıştırıp servis edelim,afiyetler olsun detaylı tarif için tıklarınız👇.''',
-      username: "Kullanıcı adı",
+      postOwner: "Kullanıcı adı",
       image: 'https://i.nefisyemektarifleri.com/2023/10/20/hasta-corbasi.jpg',
-      createdAt: "2023-10-10",
       commentCount: 12,
       likeCount: 10,
     ),
@@ -34,10 +33,9 @@ Ardından kahveli muhallebiyi de aynı şekilde paylaştıralım.
 Son olarak çikolatalı muhallebiyi paylaştırıp üzerlerini düzeltelim.
 Hazırladığımız muhallebiler oda ısısına geldikten sonra soğuması için dolaba kaldıralım.
 2 saat kadar buzdolabında dinlendirdiğimiz kakaolu muhallebilerimizi dilediğimiz şekilde süsleyerek servis edelim. Afiyet olsun!''',
-        username: "İbrahimBuru",
+        postOwner: "İbrahimBuru",
         image:
             'https://i.nefisyemektarifleri.com/2023/10/20/cikolatali-kahveli-muhallebi.jpg',
-        createdAt: "2023-10-10",
         commentCount: 22,
         likeCount: 16),
     Post(
@@ -55,10 +53,9 @@ Ardından kahveli muhallebiyi de aynı şekilde paylaştıralım.
 Son olarak çikolatalı muhallebiyi paylaştırıp üzerlerini düzeltelim.
 Hazırladığımız muhallebiler oda ısısına geldikten sonra soğuması için dolaba kaldıralım.
 2 saat kadar buzdolabında dinlendirdiğimiz kakaolu muhallebilerimizi dilediğimiz şekilde süsleyerek servis edelim. Afiyet olsun!''',
-        username: "İbrahimBuru",
+        postOwner: "İbrahimBuru",
         image:
             'https://i.nefisyemektarifleri.com/2023/10/20/cikolatali-kahveli-muhallebi.jpg',
-        createdAt: "2023-10-10",
         commentCount: 22,
         likeCount: 16),
   ];

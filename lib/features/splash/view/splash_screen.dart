@@ -37,7 +37,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         child: Column(
           children: [
             SizedBox(height: 0.3.ofSafeHeight),
-            UiConstants.logo(),
+            UiConstants.darkLogo(),
             SizedBox(height: 0.1.ofSafeHeight),
             SizedBox(
               width: 0.5.ofWidth,

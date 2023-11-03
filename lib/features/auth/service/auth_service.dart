@@ -29,6 +29,9 @@ class AuthService {
       });
       print('SERVICE DIO BITTI IÇINDE');
       var loginResponse = LoginResponse.fromJson(response.data);
+      print(loginResponse.token);
+      print(loginResponse.code);
+      print(loginResponse.message);
       if (loginResponse.code == 200) {
         print('SERVICE IF IÇINDE');
         return loginResponse;
@@ -55,7 +58,7 @@ class AuthService {
       return null;
     } catch (e) {
       print('SERVICE CATCH IÇINDE');
-      print(e);
+      print(e.toString());
     }
     return null;
   }

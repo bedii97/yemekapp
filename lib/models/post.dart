@@ -1,40 +1,48 @@
 class Post {
+  String? postId;
   String? title;
   String? body;
-  String? username;
-  String? createdAt;
+  String? postOwner;
+  String? postOwnerPhoto;
   String? image;
   int? likeCount;
   int? commentCount;
+  bool? likedByUser;
 
   Post(
-      {this.title,
+      {this.postId,
+      this.title,
       this.body,
-      this.username,
-      this.createdAt,
+      this.postOwner,
+      this.postOwnerPhoto,
+      this.image,
       this.likeCount,
       this.commentCount,
-      this.image});
+      this.likedByUser});
 
   Post.fromJson(Map<String, dynamic> json) {
+    postId = json['post_id'];
     title = json['title'];
     body = json['body'];
-    username = json['username'];
+    postOwner = json['post_owner'];
+    postOwnerPhoto = json['post_owner_photo'];
     image = json['image'];
-    createdAt = json['created_at'];
     likeCount = json['like_count'];
     commentCount = json['comment_count'];
+    likedByUser = json['liked_by_user'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    data['post_id'] = postId;
     data['title'] = title;
     data['body'] = body;
-    data['username'] = username;
+    data['post_owner'] = postOwner;
+    data['post_owner_photo'] = postOwnerPhoto;
     data['image'] = image;
-    data['created_at'] = createdAt;
     data['like_count'] = likeCount;
     data['comment_count'] = commentCount;
+    data['liked_by_user'] = likedByUser;
     return data;
   }
 }

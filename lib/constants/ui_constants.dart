@@ -20,7 +20,7 @@ class UiConstants {
 
   static AppBar appBar() {
     return AppBar(
-      title: logo(),
+      title: lightLogo(),
       backgroundColor: Palette.greenColor,
       centerTitle: true,
     );
@@ -44,7 +44,7 @@ class UiConstants {
 
   static AppBar appBarTransparent() {
     return AppBar(
-      title: UiConstants.logo(),
+      title: UiConstants.darkLogo(),
       centerTitle: true,
       backgroundColor: Colors.transparent,
       elevation: 0,
@@ -132,11 +132,23 @@ class UiConstants {
   //   );
   // }
 
-  static Text logo() {
+  static Text lightLogo() {
     return const Text(
       "YemekApp",
       style: TextStyle(
         color: Palette.whiteColor,
+        fontWeight: FontWeight.w600,
+        fontSize: 36.0,
+      ),
+      // style: TextStyle(color: Colors.white),
+    );
+  }
+
+  static Text darkLogo() {
+    return const Text(
+      "YemekApp",
+      style: TextStyle(
+        color: Palette.greenColor,
         fontWeight: FontWeight.w600,
         fontSize: 36.0,
       ),
