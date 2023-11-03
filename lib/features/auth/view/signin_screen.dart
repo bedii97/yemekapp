@@ -4,10 +4,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yemek_app/constants/ui_constants.dart';
 import 'package:yemek_app/core/utils/validations.dart';
 import 'package:yemek_app/features/auth/provider/auth_provider.dart';
+import 'package:yemek_app/features/auth/widgets/auth_field.dart';
 import 'package:yemek_app/routes/app_routes.dart';
 import 'package:yemek_app/widgets/big_title_text.dart';
 import 'package:yemek_app/widgets/common_button.dart';
-import 'package:yemek_app/widgets/custom_text_form_field.dart';
 import 'package:yemek_app/widgets/linked_text.dart';
 import 'package:yemek_app/widgets/small_title_text.dart';
 
@@ -57,22 +57,17 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
                   text: 'msg_input_your_registered'.tr(),
                 ),
                 const SizedBox(height: 16.0),
-                // AuthInput(hint: "Email"),
-                CustomTextFormField(
-                  validator: Validations.usernameValidation,
+                AuthField(
                   controller: usernamecontroller,
-                  hintText: "lbl_username".tr(),
+                  hintText: 'lbl_username'.tr(),
+                  validation: Validations.usernameValidation,
                 ),
                 const SizedBox(height: 16.0),
-                // AuthInput(
-                //   hint: "Password",
-                //   isPassword: true,
-                // ),
-                CustomTextFormField(
-                  validator: Validations.passwordValidation,
+                AuthField(
                   controller: passwordcontroller,
-                  hintText: "lbl_password".tr(),
-                  obscureText: true,
+                  hintText: 'lbl_password'.tr(),
+                  isPassword: true,
+                  validation: Validations.passwordValidation,
                 ),
                 const SizedBox(height: 16.0),
                 Align(
@@ -95,6 +90,7 @@ class _SigninScreenState extends ConsumerState<SigninScreen> {
                                 username: usernamecontroller.text,
                                 password: passwordcontroller.text,
                                 context: context);
+                            FocusScope.of(context).unfocus();
                           }
                         }),
                 const SizedBox(height: 16.0),

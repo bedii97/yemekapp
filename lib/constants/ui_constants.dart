@@ -20,15 +20,31 @@ class UiConstants {
 
   static AppBar appBar() {
     return AppBar(
-      title: logo(),
+      title: lightLogo(),
       backgroundColor: Palette.greenColor,
       centerTitle: true,
     );
   }
 
+  static AppBar appBarWithSearch() {
+    return AppBar(
+      title: const Text('Uygulama Başlığı'),
+      backgroundColor: Colors.blue, // AppBar rengi
+      centerTitle: true,
+      actions: <Widget>[
+        IconButton(
+          icon: const Icon(Icons.search),
+          onPressed: () {
+            // Burada arama işlemi başlatılabilir veya bir arama sayfasına geçiş yapılabilir.
+          },
+        ),
+      ],
+    );
+  }
+
   static AppBar appBarTransparent() {
     return AppBar(
-      title: UiConstants.logo(),
+      title: UiConstants.darkLogo(),
       centerTitle: true,
       backgroundColor: Colors.transparent,
       elevation: 0,
@@ -116,11 +132,23 @@ class UiConstants {
   //   );
   // }
 
-  static Text logo() {
+  static Text lightLogo() {
     return const Text(
       "YemekApp",
       style: TextStyle(
         color: Palette.whiteColor,
+        fontWeight: FontWeight.w600,
+        fontSize: 36.0,
+      ),
+      // style: TextStyle(color: Colors.white),
+    );
+  }
+
+  static Text darkLogo() {
+    return const Text(
+      "YemekApp",
+      style: TextStyle(
+        color: Palette.greenColor,
         fontWeight: FontWeight.w600,
         fontSize: 36.0,
       ),

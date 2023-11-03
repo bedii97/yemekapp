@@ -4,11 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:yemek_app/constants/ui_constants.dart';
 import 'package:yemek_app/core/utils/validations.dart';
 import 'package:yemek_app/features/auth/provider/auth_provider.dart';
+import 'package:yemek_app/features/auth/widgets/auth_field.dart';
 import 'package:yemek_app/theme/custom_text_style.dart';
 import 'package:yemek_app/core/utils/size_utils.dart';
 import 'package:yemek_app/widgets/big_title_text.dart';
 import 'package:yemek_app/widgets/common_button.dart';
-import 'package:yemek_app/widgets/custom_text_form_field.dart';
 
 // ignore: must_be_immutable
 class SignupScreen extends ConsumerWidget {
@@ -52,27 +52,43 @@ class SignupScreen extends ConsumerWidget {
                   style: CustomTextStyles.bodyLargeGray50001,
                 ),
                 SizedBox(height: 11.v),
-                CustomTextFormField(
-                  validator: Validations.usernameValidation,
+                // CustomTextFormField(
+                //   validator: Validations.usernameValidation,
+                //   controller: usernameController,
+                //   hintText: "lbl_username".tr(),
+                // ),
+                AuthField(
                   controller: usernameController,
-                  hintText: "lbl_username".tr(),
+                  hintText: 'lbl_username'.tr(),
+                  validation: Validations.usernameValidation,
                 ),
                 SizedBox(height: 20.v),
-                CustomTextFormField(
-                  validator: Validations.emailValidation,
+                // CustomTextFormField(
+                //   validator: Validations.emailValidation,
+                //   controller: emailController,
+                //   hintText: "lbl_email".tr(),
+                //   textInputType: TextInputType.emailAddress,
+                // ),
+                AuthField(
                   controller: emailController,
-                  hintText: "lbl_email".tr(),
-                  textInputType: TextInputType.emailAddress,
+                  hintText: 'lbl_email'.tr(),
+                  validation: Validations.emailValidation,
                 ),
                 SizedBox(height: 20.v),
-                CustomTextFormField(
-                  validator: Validations.passwordValidation,
+                AuthField(
                   controller: passwordController,
-                  hintText: "lbl_password".tr(),
-                  textInputAction: TextInputAction.done,
-                  textInputType: TextInputType.visiblePassword,
-                  obscureText: true,
+                  hintText: 'lbl_password'.tr(),
+                  isPassword: true,
+                  validation: Validations.passwordValidation,
                 ),
+                // CustomTextFormField(
+                //   validator: Validations.passwordValidation,
+                //   controller: passwordController,
+                //   hintText: "lbl_password".tr(),
+                //   textInputAction: TextInputAction.done,
+                //   textInputType: TextInputType.visiblePassword,
+                //   obscureText: true,
+                // ),
                 Align(
                   alignment: Alignment.center,
                   child: Container(
