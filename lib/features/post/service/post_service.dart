@@ -7,6 +7,7 @@ import 'package:yemek_app/core/utils/api_service.dart';
 import 'package:yemek_app/core/utils/connection_checker.dart';
 import 'package:yemek_app/core/utils/token_manager.dart';
 import 'package:yemek_app/models/base_response.dart';
+import 'package:yemek_app/models/post_response.dart';
 
 final postServiceProvider = Provider<PostService>((ref) {
   return PostService(ref.watch(dioProvider));
@@ -62,6 +63,33 @@ class PostService with TokenManager {
       } else {
         // Something happened in setting up or sending the request that triggered an Error
         return BaseResponse(message: e.message, code: 400);
+      }
+    } catch (e) {
+      print(e);
+    }
+    return null;
+  }
+
+  Future<PostResponse?> getPost() async {
+    try {
+      bool isConnected = await ConnectionChecker.checkConnection2();
+      if (!isConnected) return null;
+      _dio.options.headers['token'] = await getToken();
+      Response response = await _dio.get(ServiceConstants.getPost);
+      var postResponse = PostResponse.fromJson(response.data);
+      if (postResponse.code == 200) {
+        return postResponse;
+      } else {
+        return postResponse;
+      }
+    } on DioException catch (e) {
+      if (e.response != null) {
+        print('asd');
+        print(e.response);
+        return PostResponse.fromJson(e.response!.data);
+      } else {
+        // Something happened in setting up or sending the request that triggered an Error
+        return PostResponse(message: e.message, code: 400);
       }
     } catch (e) {
       print(e);

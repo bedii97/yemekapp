@@ -1,117 +1,136 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:yemek_app/features/post/provider/post_provider.dart';
 import 'package:yemek_app/models/post.dart';
-import 'package:yemek_app/widgets/custom_post_widget.dart';
 
-final postProvider = Provider<List<Post>>((ref) {
-  return [
-    Post(
-      title: "Hasta Çorbası",
-      body:
-          '''Baharat ve tuz hariç bütün malzemeyi tencereye alalım ,güzelce karıştırıp üzerine sıcak su ilave edelim.
-Tencereyi ocağa alıp kısık ateşte 20-25 dakika pişirelim.
-Sonrasında tavukları ayırıp blenderla iyice ezelim.
-Tavukları didip tekrar çorbanın içerisine ilave edelim.
-Tuzunu ve baharatını da ilave edip karıştırıp servis edelim,afiyetler olsun detaylı tarif için tıklarınız👇.''',
-      postOwner: "Kullanıcı adı",
-      image: 'https://i.nefisyemektarifleri.com/2023/10/20/hasta-corbasi.jpg',
-      commentCount: 12,
-      likeCount: 10,
-    ),
-    Post(
-        title: "Çikolatalı Kahveli Muhallebi",
-        body:
-            '''Çikolatalı kahveli muhallebi için öncelikle sütü uygun bir tencereye alalım.
-Üzerine şeker, un ve nişastayı ekleyerek pürüzsüz olacak şekilde karıştıralım.
-Ocağın altını açalım ve muhallebi kaynayıp göz göz oluncaya kadar orta ateşte sürekli karıştırarak muhallebimizi pişirmeye başlayalım. Bu aşamada ocağı çok yüksek ateşte açmamaya dikkat etmelisiniz.
-Kaynamaya başladıktan sonra muhallebimizin içerisine krema ve vanilya ilave edelim. Bir kaç tur daha karıştırarak tencereyi ocaktan alalım.
-Hazır olan muhallebimizi 3 ayrı kaba eşit bir şekilde paylaştıralım.
-Kaplardan bir tanesine granül kahve ilave edelim ve çözülene kadar karıştıralım.
-Diğer kabada bitter çikolata ilave edelim ve homojen bir kıvam alana kadar karıştıralım.
-Kullanacağımız servis kaplarına önce beyaz muhallebiyi paylaştıralım.
-Ardından kahveli muhallebiyi de aynı şekilde paylaştıralım.
-Son olarak çikolatalı muhallebiyi paylaştırıp üzerlerini düzeltelim.
-Hazırladığımız muhallebiler oda ısısına geldikten sonra soğuması için dolaba kaldıralım.
-2 saat kadar buzdolabında dinlendirdiğimiz kakaolu muhallebilerimizi dilediğimiz şekilde süsleyerek servis edelim. Afiyet olsun!''',
-        postOwner: "İbrahimBuru",
-        image:
-            'https://i.nefisyemektarifleri.com/2023/10/20/cikolatali-kahveli-muhallebi.jpg',
-        commentCount: 22,
-        likeCount: 16),
-    Post(
-        title: "Çikolatalı Kahveli Muhallebi",
-        body:
-            '''Çikolatalı kahveli muhallebi için öncelikle sütü uygun bir tencereye alalım.
-Üzerine şeker, un ve nişastayı ekleyerek pürüzsüz olacak şekilde karıştıralım.
-Ocağın altını açalım ve muhallebi kaynayıp göz göz oluncaya kadar orta ateşte sürekli karıştırarak muhallebimizi pişirmeye başlayalım. Bu aşamada ocağı çok yüksek ateşte açmamaya dikkat etmelisiniz.
-Kaynamaya başladıktan sonra muhallebimizin içerisine krema ve vanilya ilave edelim. Bir kaç tur daha karıştırarak tencereyi ocaktan alalım.
-Hazır olan muhallebimizi 3 ayrı kaba eşit bir şekilde paylaştıralım.
-Kaplardan bir tanesine granül kahve ilave edelim ve çözülene kadar karıştıralım.
-Diğer kabada bitter çikolata ilave edelim ve homojen bir kıvam alana kadar karıştıralım.
-Kullanacağımız servis kaplarına önce beyaz muhallebiyi paylaştıralım.
-Ardından kahveli muhallebiyi de aynı şekilde paylaştıralım.
-Son olarak çikolatalı muhallebiyi paylaştırıp üzerlerini düzeltelim.
-Hazırladığımız muhallebiler oda ısısına geldikten sonra soğuması için dolaba kaldıralım.
-2 saat kadar buzdolabında dinlendirdiğimiz kakaolu muhallebilerimizi dilediğimiz şekilde süsleyerek servis edelim. Afiyet olsun!''',
-        postOwner: "İbrahimBuru",
-        image:
-            'https://i.nefisyemektarifleri.com/2023/10/20/cikolatali-kahveli-muhallebi.jpg',
-        commentCount: 22,
-        likeCount: 16),
-  ];
-});
-
-class HomePage extends StatelessWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
   @override
+  ConsumerState<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends ConsumerState<HomePage> {
+  Future<List<Post>?>? posts;
+
+  @override
+  void initState() {
+    // //Post listemi late olarak tanımladım ve initState aşamasında set ettim.
+    // //Buildde çağırırken sıkıntı etmedi o yüzden.
+    //Late olarak tanımlayınca olmadı o yüzden nullable set ettim
+    //FutureBuilder kullanarakta view'a bindladım
+    //Asıl olay ise futureProvider tanımlama aşamasında yaşandı
+    // final fetchPostProvider = FutureProvider<Future<List<Post>?>>((ref) async {
+    //   final postProvider = ref.read(postStateNotifierProvider.notifier);
+    //   return postProvider.getPost();
+    // });
+    //Ben normalde return ref.read(postStateNotifierProvider.notifier).getPost();
+    //denediğimde çalışmamıştı ama böyle yapınca çalıştı
+    super.initState();
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      posts = ref.watch(postStateNotifierProvider.notifier).getPost();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return _CustomListView();
+    bool state = ref.watch(postStateNotifierProvider);
+    //Çok saçma oldu ama diğer türlüde çalışmıyor amk
+    return state
+        ? const Center(
+            child: CircularProgressIndicator.adaptive(),
+          )
+        : FutureBuilder(
+            future: posts,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done &&
+                  snapshot.data == null) {
+                return const Center(child: Text('Birilerini Takip et'));
+              }
+              if (snapshot.connectionState != ConnectionState.done) {
+                return const Center(
+                  child: CircularProgressIndicator.adaptive(),
+                );
+              }
+              return const Center(child: Text('Postların geldi'));
+            },
+          );
   }
+  // Widget build(BuildContext context) {
+  //   var state = ref.watch(postStateNotifierProvider);
+  //   var posts2 = ref.read(fetchPostProvider.future);
+  //   return state
+  //       ? const CircularProgressIndicator.adaptive()
+  //       : ListView.separated(
+  //           separatorBuilder: (context, index) => const Divider(),
+  //           itemCount: ref.watch(postProvider).length,
+  //           itemBuilder: (context, index) {
+  //             return Padding(
+  //               padding: const EdgeInsets.all(8.0),
+  //               child: CustomPostWidget(post: posts[index]),
+  //             );
+  //           },
+  //         );
+  // }
 }
 
-class _CustomListView extends ConsumerWidget {
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final posts = ref.read(postProvider);
-    return ListView.separated(
-      separatorBuilder: (context, index) => const Divider(),
-      itemCount: ref.watch(postProvider).length,
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: CustomPostWidget(post: posts[index]),
-        );
-      },
-    );
-  }
-}
 
-class _CustomListTile extends ConsumerWidget {
-  final int index;
-  const _CustomListTile(this.index);
 
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Center(
-      child: ListTile(
-        leading: Image.asset("assets/images/piyaz.jpg"),
-        title: Text(ref.read(postProvider)[index].title ?? "Boş"),
-        subtitle: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(ref.read(postProvider)[index].body ?? "Boş"),
-            Row(
-              children: [
-                const Icon(Icons.thumb_up),
-                Text('Likes: ${ref.read(postProvider)[index].likeCount}'),
-                const Icon(Icons.comment),
-                Text('Comments: ${ref.read(postProvider)[index].commentCount}'),
-              ],
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// class _CustomListView extends ConsumerWidget {
+//   @override
+//   Widget build(BuildContext context, WidgetRef ref) {
+//     var posts = ref.watch(postStateNotifierProvider.notifier).getPost();
+//     return FutureBuilder(
+//       future: posts,
+//       builder: (context, snapshot) {
+//         if (snapshot.connectionState != ConnectionState.done) {
+//           return const CircularProgressIndicator.adaptive();
+//         }
+//         if (snapshot.data == null) {
+//           return const Center(
+//               child: Text('Takip ettiğin hiçkimseden bir gönderi yok :('));
+//         }
+//         if (snapshot.data != null) {
+//           return ListView.separated(
+//             separatorBuilder: (context, index) => const Divider(),
+//             itemCount: snapshot.data!.length,
+//             itemBuilder: (context, index) {
+//               return Padding(
+//                 padding: const EdgeInsets.all(8.0),
+//                 child: CustomPostWidget(post: ((snapshot.data![index]))),
+//               );
+//             },
+//           );
+//         }
+//         return const SizedBox.shrink();
+//       },
+//     );
+//   }
+// }
