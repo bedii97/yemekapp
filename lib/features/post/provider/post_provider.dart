@@ -10,6 +10,8 @@ import 'package:yemek_app/core/utils/token_manager.dart';
 import 'package:yemek_app/core/utils/utils.dart';
 import 'package:yemek_app/features/post/service/post_service.dart';
 import 'package:yemek_app/models/base_response.dart';
+import 'package:yemek_app/models/post.dart';
+import 'package:yemek_app/models/post_response.dart';
 
 final postStateNotifierProvider =
     StateNotifierProvider<PostProvider, bool>((ref) {
@@ -21,6 +23,7 @@ class PostProvider extends StateNotifier<bool> with TokenManager {
   PostProvider(this._postService) : super(false);
 
   BaseResponse? _baseResponse;
+  PostResponse? _postResponse;
   //State isLoading görevi görüyor
 
   void createPost(
@@ -88,47 +91,32 @@ class PostProvider extends StateNotifier<bool> with TokenManager {
     }
   }
 
-  // void register(
-  //     {required String username,
-  //     required String email,
-  //     required String password,
-  //     required BuildContext context}) async {
-  //   try {
-  //     state = true;
-  //     await _authService
-  //         .register(username: username, email: email, password: password)
-  //         .then((baseResponse) {
-  //       if (baseResponse?.code == 200) {
-  //         // Navigator.pushNamed(context, AppRoutes.homeScreen);
-  //         showSnackBar(context, 'registration_check_email'.tr());
-  //         Navigator.pushNamedAndRemoveUntil(
-  //           context,
-  //           AppRoutes.signInScreen,
-  //           (route) => false,
-  //         );
-  //       } else {
-  //         showSnackBar(
-  //             context,
-  //             (ServerErrors.errors.containsValue(baseResponse?.message)
-  //                     ? baseResponse?.message
-  //                     : 'undefined_error')!
-  //                 .tr());
-  //       }
-  //       //pushReplacementNamed
-  //     });
-  //     state = false;
-  //   } catch (e) {
-  //     state = false;
-  //   }
-  // }
-
-  // void logout(BuildContext context) {
-  //   deleteToken();
-  //   // Navigator.pushReplacementNamed(context, AppRoutes.signInScreen);
-  //   Navigator.pushNamedAndRemoveUntil(
-  //     context,
-  //     AppRoutes.signInScreen,
-  //     (route) => false,
-  //   );
-  // }
+  Future<List<Post>?> getPost() async {
+    try {
+      state = true;
+      await _postService.getPost().then((postResponse) async {
+        _postResponse = postResponse;
+        if ((postResponse?.code) is int && postResponse?.code == 200) {
+          state = false;
+          return postResponse;
+        } else {
+          state = false;
+          print(postResponse?.message);
+        }
+      }).onError(
+        (error, stackTrace) {
+          state = false;
+          print(stackTrace);
+          return _postResponse;
+        },
+      );
+      state = false;
+    } on DioException catch (e) {
+      state = false;
+      print(e);
+    } catch (e) {
+      print(e);
+    }
+    return null;
+  }
 }

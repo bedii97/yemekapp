@@ -3,7 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_navigation_bar/responsive_navigation_bar.dart';
 import 'package:yemek_app/constants/ui_constants.dart';
-import 'package:yemek_app/features/home/pages/discovery_page.dart';
+import 'package:yemek_app/core/utils/size_utils.dart';
+import 'package:yemek_app/features/home/pages/explore_page.dart';
 import 'package:yemek_app/features/home/pages/home_page.dart';
 import 'package:yemek_app/features/home/pages/notification_page.dart';
 import 'package:yemek_app/features/home/pages/profile_page.dart';
@@ -76,7 +77,7 @@ class HomeScreen extends ConsumerWidget {
     return BottomAppBar(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       shape: const CircularNotchedRectangle(),
-      height: 70,
+      height: 0.08.ofSafeHeight,
       color: Palette.greenColor.withOpacity(1),
       notchMargin: 5,
       child: Row(
@@ -129,10 +130,10 @@ class HomeScreen extends ConsumerWidget {
   }
 
   List<Widget> get _getPageViewChildrens {
-    return const [
-      HomePage(),
-      DiscoverPage(),
-      NotificationsPage(),
+    return [
+      const HomePage(),
+      ExplorePage(),
+      const NotificationsPage(),
       ProfilePage(),
     ];
   }

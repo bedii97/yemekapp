@@ -3,13 +3,17 @@ import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chip_tags/flutter_chip_tags.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:yemek_app/constants/ui_constants.dart';
+import 'package:yemek_app/core/utils/size_utils.dart';
 import 'package:yemek_app/core/utils/token_manager.dart';
 import 'package:yemek_app/features/post/provider/post_provider.dart';
 import 'package:yemek_app/features/post/provider/selected_images_provider.dart';
 import 'package:yemek_app/features/post/service/post_service.dart';
+import 'package:yemek_app/features/post/widgets/carousel.dart';
 import 'package:yemek_app/theme/palette.dart';
 
 class CreatePostScreen extends ConsumerStatefulWidget with TokenManager {
@@ -20,7 +24,7 @@ class CreatePostScreen extends ConsumerStatefulWidget with TokenManager {
 }
 
 class _CreatePostScreenState extends ConsumerState<CreatePostScreen> {
-  List<String> chipList = ['ASD', 'DSA '];
+  List<String> chipList = [];
 
   final titleController = TextEditingController();
 
@@ -50,7 +54,7 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen> {
                 controller: titleController,
                 decoration: _getTextFormFieldDecoration('lbl_title'),
               ),
-              const SizedBox(height: 8.0),
+              SizedBox(height: 0.01.ofSafeHeight),
               ChipTags(
                 list: chipList,
                 createTagOnSubmit: true,
@@ -60,37 +64,69 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen> {
                 decoration: _getTextFormFieldDecoration('lbl_ingredients'),
                 keyboardType: TextInputType.text,
               ),
+              SizedBox(
+                height: 0.01.ofSafeHeight,
+              ),
               TextFormField(
                 controller: bodyController,
                 decoration: _getTextFormFieldDecoration('lbl_method'),
                 maxLines: methodMaxLines,
               ),
+              SizedBox(height: 0.01.ofSafeHeight),
+              ref.watch(selectedImagesProvider)!.isEmpty
+                  ? const SizedBox.shrink()
+                  : Carousel(
+                      height: 0.3.ofSafeHeight,
+                      width: 0.3.ofWidth,
+                      activateIndicatorColor: Palette.greenColor,
+                      unActivatedIndicatorColor: Palette.greyColor,
+                      indicatorBarColor: Colors.transparent,
+                      items: ref.watch(selectedImagesProvider)!.map(
+                        (e) {
+                          return Image.file(
+                            File(e.path),
+                            width: 0.3.ofWidth,
+                            height: 0.3.ofSafeHeight,
+                          );
+                        },
+                      ).toList()),
               //Resim eklenecek
-              Row(
-                children: ref.watch(selectedImagesProvider)?.map(
-                      (e) {
-                        return Image.file(
-                          File(e.path),
-                          width: 100,
-                          height: 100,
-                        );
-                      },
-                    ).toList() ??
-                    [
-                      Container(
-                        height: 30,
-                        width: 30,
-                        color: Colors.red,
-                      )
-                    ],
-              ),
+              // Row(
+              //   children: ref.watch(selectedImagesProvider)?.map(
+              //         (e) {
+              //           print('Girdi');
+              //           return Image.file(
+              //             File(e.path),
+              //             width: 100,
+              //             height: 100,
+              //           );
+              //         },
+              //       ).toList() ??
+              //       [
+              //         Container(
+              //           height: 30,
+              //           width: 30,
+              //           color: Colors.red,
+              //         )
+              //       ],
+              // ),
+              SizedBox(height: 0.01.ofSafeHeight),
               ElevatedButton(
                   onPressed: () async {
+                    //Pick image kısmını utils içinde yapıp sağda solda öyle çağır
+                    if (buttonClicked) return;
+                    if (await Permission.photos.isPermanentlyDenied) {
+                      openAppSettings();
+                    }
+                    buttonClicked = true;
                     final picker = ImagePicker();
                     ref.read(selectedImagesProvider.notifier).images =
                         await picker.pickMultiImage();
+                    buttonClicked = false;
+                    return;
                   },
                   child: const Text('btn_pick_image').tr()),
+              SizedBox(height: 0.01.ofSafeHeight),
               ElevatedButton(
                 onPressed: () async {
                   if (buttonClicked) return;

@@ -15,7 +15,7 @@ class SelectedImagesNotifier extends StateNotifier<List<XFile>?> {
   SelectedImagesNotifier() : super([]);
 
   set images(List<XFile> images) {
-    state = [];
+    clear();
     if (images.length <= 3) {
       state = images;
     } else {
@@ -23,5 +23,9 @@ class SelectedImagesNotifier extends StateNotifier<List<XFile>?> {
         state!.add(images[i]);
       }
     }
+  }
+
+  void clear() {
+    state = [];
   }
 }
